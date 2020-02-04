@@ -11,7 +11,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView openBoardList(ModelMap model) throws Exception{
-		ModelAndView mv = new ModelAndView("/NewFile");
+		ModelAndView mv = new ModelAndView("/index");
 		return mv;
 	}
 }
