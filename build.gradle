@@ -32,6 +32,7 @@ dependencies {
    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
    implementation('org.springframework.boot:spring-boot-starter-actuator')
    implementation('org.springframework.cloud:spring-cloud-starter-config')
+   implementation("org.springframework.boot:spring-boot-starter-security")
    runtimeOnly('org.springframework.boot:spring-boot-devtools')
    runtimeOnly('mysql:mysql-connector-java')
    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
