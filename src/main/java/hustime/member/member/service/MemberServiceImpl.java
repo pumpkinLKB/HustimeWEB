@@ -28,6 +28,5 @@ public class MemberServiceImpl implements MemberService{
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setPasswordConfirm(bCryptPasswordEncoder.encode(member.getPasswordConfirm()));
 		memberRepository.save(member);
-		log.debug("@@@@@@@@@@@@");
 	}
 }

@@ -22,14 +22,14 @@ import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
-public class RestNoticeController {
+public class NoticeController {
 	
 	@Autowired
 	private NoticeService boardService;
 	
 	@RequestMapping(value="/community/notice", method=RequestMethod.GET)
 	public ModelAndView openBoardList() throws Exception{
-		ModelAndView mv = new ModelAndView("/community/notice/restNoticeList");
+		ModelAndView mv = new ModelAndView("/community/notice/tables");
 		
 		List<NoticeDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
