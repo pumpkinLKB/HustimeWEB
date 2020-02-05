@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfigura
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-//@EnableJpaAuditing
+@EnableJpaAuditing
 @EntityScan(
 		basePackageClasses = {Jsr310JpaConverters.class},
 		basePackages = {"hustime"})

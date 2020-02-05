@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import hustime.member.member.entity.MemberEntity;
 import hustime.member.member.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service("MemberService")
 public class MemberServiceImpl implements MemberService{
 	@Autowired
@@ -26,5 +28,6 @@ public class MemberServiceImpl implements MemberService{
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setPasswordConfirm(bCryptPasswordEncoder.encode(member.getPasswordConfirm()));
 		memberRepository.save(member);
+		log.debug("@@@@@@@@@@@@");
 	}
 }

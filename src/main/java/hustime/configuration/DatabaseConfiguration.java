@@ -42,6 +42,12 @@ public class DatabaseConfiguration {
 	}
 	
 	@Bean
+	@ConfigurationProperties(prefix="spring.jpa")
+	public Properties hibernateConfig(){
+		return new Properties();
+	}
+	
+	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
