@@ -25,8 +25,9 @@ public class BasicController {
 	@Autowired
 	private MemberValidator memberValidator;
 
-	@RequestMapping(value = "/hu_login") 
+	@RequestMapping(value = "/hu_login", method=RequestMethod.GET) 
 	public String templateloginPage(Model model) {
+		model.addAttribute("userForm", new MemberEntity());
 		return "/member/hu_login"; 
 	}
 	
@@ -38,12 +39,14 @@ public class BasicController {
 	@RequestMapping(value = "/register", method=RequestMethod.GET) 
 	public String registration(Model model) {
 		model.addAttribute("userForm", new MemberEntity());
+		//log.debug("#####22");
 		return "/member/register"; 
 	}
 	
 	@RequestMapping(value = "/register", method=RequestMethod.POST) 
 	public String registration(@ModelAttribute("userForm") @Valid MemberEntity userForm, BindingResult bindingResult) {
 		memberValidator.validate(userForm, bindingResult);
+		//log.debug("#####");
 		
 		if(bindingResult.hasErrors()) {
 			log.debug("valid error");

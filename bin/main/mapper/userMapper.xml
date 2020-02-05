@@ -10,20 +10,20 @@
         <result property="username" column="username"/>
         <result property="email" column="email"/>
         <result property="password" column="password"/>
-        <result property="passwordConfirm" column="password_Confirm"/>
+        <result property="passwordConfirm" column="password_confirm"/>
     </resultMap>
 
 
     <select id="selectUserInfoAll" resultType="hashMap">
     <![CDATA[
 		SELECT *
-		FROM TBL_MEMBER
+		FROM MEMBER
 	]]>
     </select>
 
     <insert id="addUserInfo" >
     <![CDATA[
-        insert into TBL_MEMBER(id ,uname, email, passwd, passwdConfirm)
+        insert into MEMBER(id ,username, email, password, password_confirm)
         values(#{id}, #{username}, #{email}, #{password}, #{passwordConfirm})
      ]]>
     </insert>
@@ -31,16 +31,16 @@
     <select id="findByUserName" parameterType="map" resultMap="userResultMap">
     <![CDATA[
       SELECT *
-      FROM TBL_MEMBER
-      WHERE UNAME =#{username}
+      FROM MEMBER
+      WHERE USERNAME =#{username}
       ]]>
     </select>
 
     <select id="findByUserEmail" parameterType="map" resultMap="userResultMap">
     <![CDATA[
       SELECT *
-      FROM TBL_MEMBER
-      WHERE UNAME =#{email}
+      FROM MEMBER
+      WHERE USERNAME =#{email}
       ]]>
     </select>
 </mapper>
