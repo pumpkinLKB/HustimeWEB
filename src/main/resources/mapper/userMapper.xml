@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member.member.mapper.MemberMapper">
+
+    <resultMap id="userResultMap" type="member.member.entity.MemberEntity">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="passwordConfirm" column="password_Confirm"/>
+    </resultMap>
+
+
+    <select id="selectUserInfoAll" resultType="hashMap">
+    <![CDATA[
+		SELECT *
+		FROM TBL_MEMBER
+	]]>
+    </select>
+
+    <insert id="addUserInfo" >
+    <![CDATA[
+        insert into TBL_MEMBER(id ,uname, email, passwd, passwdConfirm)
+        values(#{id}, #{username}, #{email}, #{password}, #{passwordConfirm})
+     ]]>
+    </insert>
+    
+    <select id="findByUserName" parameterType="map" resultMap="userResultMap">
+    <![CDATA[
+      SELECT *
+      FROM TBL_MEMBER
+      WHERE UNAME =#{username}
+      ]]>
+    </select>
+
+    <select id="findByUserEmail" parameterType="map" resultMap="userResultMap">
+    <![CDATA[
+      SELECT *
+      FROM TBL_MEMBER
+      WHERE UNAME =#{email}
+      ]]>
+    </select>
+</mapper>

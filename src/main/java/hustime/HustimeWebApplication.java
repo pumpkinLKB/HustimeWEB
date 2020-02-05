@@ -10,9 +10,9 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 //@EnableJpaAuditing
-//@EntityScan(
-//		basePackageClasses = {Jsr310JpaConverters.class},
-//		basePackages = {"member"})
+@EntityScan(
+		basePackageClasses = {Jsr310JpaConverters.class},
+		basePackages = {"hustime"})
 @EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class})
 @SpringBootApplication(exclude={MultipartAutoConfiguration.class})
 public class HustimeWebApplication {
