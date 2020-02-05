@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EntityScan(
 		basePackageClasses = {Jsr310JpaConverters.class},
 		basePackages = {"hustime"})
-@EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class})
 @SpringBootApplication(exclude={MultipartAutoConfiguration.class})
 public class HustimeWebApplication {
 
