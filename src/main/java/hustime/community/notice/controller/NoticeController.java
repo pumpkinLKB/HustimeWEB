@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hustime.community.notice.dto.NoticeDto;
 import hustime.community.notice.dto.NoticeFileDto;
 import hustime.community.notice.service.NoticeService;
+import hustime.member.member.controller.BasicController;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -29,19 +31,17 @@ public class NoticeController {
 	
 	@RequestMapping(value="/community/notice", method=RequestMethod.GET)
 	public ModelAndView openBoardList() throws Exception{
-		ModelAndView mv = new ModelAndView("/community/notice/tables");
-		
+		ModelAndView mv = new ModelAndView("/community/notice/list");
 		List<NoticeDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
-		
 		return mv;
 	}
 	
 	@RequestMapping(value="/community/notice/write", method=RequestMethod.GET)
 	public String openBoardWrite() throws Exception{
-		return "/community/notice/restNoticeWrite";
+		return "/community/notice/write";
 	}
-	
+
 	@RequestMapping(value="/community/notice/write", method=RequestMethod.POST)
 	public String insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
 		boardService.insertBoard(board, multipartHttpServletRequest);
@@ -50,11 +50,9 @@ public class NoticeController {
 	
 	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.GET)
 	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
-		ModelAndView mv = new ModelAndView("/board/restNoticeDetail");
-		
+		ModelAndView mv = new ModelAndView("/community/notice/detail");
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
-		
 		return mv;
 	}
 	

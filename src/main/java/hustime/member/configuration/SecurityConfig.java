@@ -32,9 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// 접근허용
 			.authorizeRequests() 
 			// 여기다가 지정안해주면 권한이 없어서 접근할 수 없음.
-			.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password").permitAll()
+			//.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password").permitAll()
+			.antMatchers("**").permitAll()
 			.anyRequest().authenticated()
 			.and()
+		
 			
 			// iframe 허용
 			.headers()
@@ -43,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			// DB 어드민 접속 허용
 			.csrf()
+			.ignoringAntMatchers("/community/**")
 			.ignoringAntMatchers("/h2-console/**")
 			.and()
 			
