@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,31 +27,38 @@ import hustime.member.member.service.RememberMeTokenService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception{
+		web.ignoring().antMatchers("/dist/**","/vendor/**","/css/**","/js/**","/images/**", "/resources/**/**");
+	}
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
 			// 접근허용
 			.authorizeRequests() 
 			// 여기다가 지정안해주면 권한이 없어서 접근할 수 없음.
-			.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password").permitAll()
-			.anyRequest().authenticated()
+			//.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password", "/lostPwd").permitAll()
+			.antMatchers("/**").permitAll()
+			//.anyRequest().authenticated()
 			.and()
 			
-			// iframe 허용
-			.headers()
-			.frameOptions().disable()
-			.and()
-			
-			// DB 어드민 접속 허용
+//			// iframe 허용
+//			.headers()
+//			.frameOptions().disable()
+//			.and()
+//			
+//			// DB 어드민 접속 허용
 			.csrf()
-			.ignoringAntMatchers("/h2-console/**")
+			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
 			.and()
 			
 			// 로그인
 			.formLogin()
 			.loginPage("/hu_login")
-			.loginProcessingUrl("/index")
-			.defaultSuccessUrl("/index")
+			.loginProcessingUrl("/sign-in")
+			.defaultSuccessUrl("/")
 			.failureUrl("/login?error")
 			.usernameParameter("email")
 			.passwordParameter("password")

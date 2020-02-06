@@ -12,4 +12,6 @@ import hustime.member.member.entity.MemberEntity;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, String>{
 	MemberEntity findByEmail(String email);
+
+	MemberEntity findByUsername(String username);
 }
