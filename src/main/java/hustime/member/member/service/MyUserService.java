@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,21 +29,18 @@ public class MyUserService implements UserDetailsService{
 
 	private static final String ROLE_PREFIX = "ROLE_";
 
-	@PostConstruct
-	private void created(){
-		log.debug("체크 로그인");
-	}
-
-	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		log.info("loadUserByUsername user id {} ", email);
+		System.out.println("email : "+email);
 
 		MemberEntity member = memberRepository.findByEmail(email);
 		log.debug("member", member.toString());
+		System.out.println("member : "+member.toString());
+		
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + member.getRole().name()));
 		log.debug("권한체크:", grantedAuthorities.toString());
-		return new User(member.getUsername(), member.getPassword(), grantedAuthorities);
+		
+		return new User(member.getEmail(), member.getPassword(), grantedAuthorities);
 	}
 }

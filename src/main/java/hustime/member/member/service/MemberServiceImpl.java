@@ -21,6 +21,11 @@ public class MemberServiceImpl implements MemberService{
 	public MemberEntity findByUserEmail(String email) {
 		return memberRepository.findByEmail(email);
 	}
+	
+	@Override
+	public MemberEntity findByUserName(String username) {
+		return memberRepository.findByUsername(username);
+	}
 		
 //	/bCryptPasswordEncoder 는 단방향 암호화 클래스
 	@Override
