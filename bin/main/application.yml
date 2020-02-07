@@ -2,7 +2,8 @@ logging:
   config: classpath:logback-${spring.profiles.active}.xml
 
 spring:
-  datasource:
+
+  datasource: 
     hikari:
       connection-test-query: SELECT 1
       allow-pool-suspension: true
@@ -13,6 +14,11 @@ spring:
     hibernate:
       use-new-id-generator-mappings: false  main:    allow-bean-definition-overriding: true  messages:    basename: validation
     encoding: UTF-8
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+        
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

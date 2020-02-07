@@ -323,18 +323,16 @@
 							</div>
 
 							<form id="frm" method="post">
-
 								<div class="form-group">
-									<label>제목</label>
-									<text class="form-control" type="text" id="title" name="title"
-										th:text="${board.title }">
+									<label>제목</label> <input class="form-control" type="text"
+										id="title" name="title" th:value="${board.title }">
 									<p class="help-block"></p>
 								</div>
 
 								<div class="form-group">
 									<label>내용</label>
-									<text class="form-control" title="내용" id="contents"
-										name="contents" th:text="${board.contents }"></text>
+									<textarea class="form-control" rows="10" title="내용"
+										id="contents" name="contents" th:text="${board.contents }"></textarea>
 								</div>
 
 								<div class="form-group">

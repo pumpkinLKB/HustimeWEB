@@ -1,5 +1,6 @@
 package hustime.member.configuration;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
@@ -9,14 +10,24 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.google.common.collect.ImmutableList;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
 import hustime.member.member.service.MemberAccessDeniedHandler;
 import hustime.member.member.service.MyUserService;
@@ -30,20 +41,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception{
-		web.ignoring().antMatchers("/dist/**","/vendor/**","/css/**","/js/**","/images/**", "/resources/**/**");
+		web.ignoring().antMatchers("/dist/**","/vendor/**","/css/**","/js/**","/images/**", "/resources/**/**", "/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
+		
 		http
 			// 접근허용
 			.authorizeRequests() 
 			// 여기다가 지정안해주면 권한이 없어서 접근할 수 없음.
 			//.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password", "/lostPwd").permitAll()
 			.antMatchers("/**").permitAll()
-			//.anyRequest().authenticated()
 			.and()
-		
+			//.anyRequest().authenticated()
 			
 //			// iframe 허용
 //			.headers()
@@ -51,11 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.and()
 		
 //			// DB 어드민 접속 허용
-			.csrf()
-			.ignoringAntMatchers("/community/**")
-			.ignoringAntMatchers("/h2-console/**")
-			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
-			.and()
+//			.csrf().disable().cors().and()
+//			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
+//			.and()
 			
 			// 로그인
 			.formLogin()
@@ -85,8 +94,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.clearAuthentication(true)
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/login?logout")
-			.permitAll();
+			.permitAll()
+			.and();
+			
 	}
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(myUserService()).passwordEncoder(bCryptPasswordEncoder());
@@ -121,4 +133,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public MemberAccessDeniedHandler MemberAccessDeniedHandler() throws Exception{
 		return new MemberAccessDeniedHandler();
 	}
+
 }

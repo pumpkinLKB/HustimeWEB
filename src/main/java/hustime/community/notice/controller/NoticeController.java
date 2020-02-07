@@ -37,6 +37,7 @@ public class NoticeController {
 		return mv;
 	}
 	
+	
 	@RequestMapping(value="/community/notice/write", method=RequestMethod.GET)
 	public String openBoardWrite() throws Exception{
 		return "/community/notice/write";
