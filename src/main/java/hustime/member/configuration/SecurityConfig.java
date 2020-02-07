@@ -39,15 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// 접근허용
 			.authorizeRequests() 
 			// 여기다가 지정안해주면 권한이 없어서 접근할 수 없음.
-<<<<<<< HEAD
-			//.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password").permitAll()
-			.antMatchers("**").permitAll()
-			.anyRequest().authenticated()
-=======
 			//.antMatchers("/dist/**", "/vendor/**", "/css/**", "/js/**", "/images/**", "/resources/**/**", "/h2-console/**", "/webjars/**", "/register", "/index", "/", "/hu_login", "/password", "/lostPwd").permitAll()
 			.antMatchers("/**").permitAll()
 			//.anyRequest().authenticated()
->>>>>>> branch 'master' of https://github.com/pumpkinLKB/HustimeWEB.git
 			.and()
 		
 			
@@ -58,12 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			
 //			// DB 어드민 접속 허용
 			.csrf()
-<<<<<<< HEAD
-			.ignoringAntMatchers("/community/**")
-			.ignoringAntMatchers("/h2-console/**")
-=======
 			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
->>>>>>> branch 'master' of https://github.com/pumpkinLKB/HustimeWEB.git
 			.and()
 			
 			// 로그인
