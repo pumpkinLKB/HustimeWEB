@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import hustime.community.notice.common.FileUtils;
+import hustime.community.notice.common.NoticeFileUtils;
 import hustime.community.notice.dto.NoticeDto;
 import hustime.community.notice.dto.NoticeFileDto;
 import hustime.community.notice.mapper.NoticeMapper;
@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeMapper boardMapper;
 	
 	@Autowired
-	private FileUtils fileUtils;
+	private NoticeFileUtils fileUtils;
 	
 	@Override
 	public List<NoticeDto> selectBoardList() throws Exception {

@@ -1,4 +1,4 @@
-package hustime.community.notice.common;
+package hustime.community.schedule.common;
 
 import java.io.File;
 import java.time.ZonedDateTime;
@@ -12,17 +12,17 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import hustime.community.notice.dto.NoticeFileDto;
+import hustime.community.schedule.dto.ScheduleFileDto;
 
 @Component
-public class FileUtils {
+public class ScheduleFileUtils {
 	
-	public List<NoticeFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	public List<ScheduleFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
 		if(ObjectUtils.isEmpty(multipartHttpServletRequest)){
 			return null;
 		}
 		
-		List<NoticeFileDto> fileList = new ArrayList<>();
+		List<ScheduleFileDto> fileList = new ArrayList<>();
 		
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); 
     	ZonedDateTime current = ZonedDateTime.now();
@@ -60,7 +60,7 @@ public class FileUtils {
 					}
 					
 					newFileName = Long.toString(System.nanoTime()) + originalFileExtension;
-					NoticeFileDto boardFile = new NoticeFileDto();
+					ScheduleFileDto boardFile = new ScheduleFileDto();
 					boardFile.setBoardIdx(boardIdx);
 					boardFile.setFileSize(multipartFile.getSize());
 					boardFile.setOriginalFileName(multipartFile.getOriginalFilename());

@@ -261,9 +261,9 @@
 						<li><a href="#"><i class="fa fa-comments"></i> COMMUNITY<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="flot.html">일정</a></li>
+								<li><a href="/community/schedule">일정</a></li>
 								<li><a href="/community/notice">공지사항</a></li>
-								<li><a href="flot.html">자유게시판</a></li>
+								<li><a href="/community/free">자유게시판</a></li>
 								<li><a href="morris.html">채팅방</a></li>
 							</ul> <!-- /.nav-second-level --></li>
 						<li><a href="#"><i class="fa fa-info-circle"></i>
@@ -316,8 +316,7 @@
 							</div>
 
 							<div class="form-group">
-								<label>첨부파일</label>
-								<a th:each="list : ${board.fileList}"
+								<label>첨부파일</label> <a th:each="list : ${board.fileList}"
 									th:href="@{/board/file(idx=${list.idx}, boardIdx=${list.boardIdx})}"
 									th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
 							</div>
@@ -337,7 +336,9 @@
 
 								<div class="form-group">
 									<a class="btn btn-outline btn-primary" href="#this" id="save">저장</a>
-									<a class="btn btn-outline btn-primary" href="/community/notice/" th:attrappend="href=${board.boardIdx}">취소</a>
+									<a class="btn btn-outline btn-primary"
+										href="/community/notice/"
+										th:attrappend="href=${board.boardIdx}">취소</a>
 								</div>
 
 								<input type="hidden" id="boardIdx" name="boardIdx"
@@ -345,24 +346,35 @@
 								<!-- 여기 -->
 								<input type="hidden" id="method" name="_method" />
 							</form>
-							
+
 							<script
 								src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 							<script type="text/javascript">
-								$(document).ready(function() {
-									/* 여기 */
-									var boardIdx = $("#boardIdx").val();
+								$(document)
+										.ready(
+												function() {
+													/* 여기 */
+													var boardIdx = $(
+															"#boardIdx").val();
 
-									$("#save").on("click", function() {
-										/* 여기 */
-										$("#method").val("put");
+													$("#save")
+															.on(
+																	"click",
+																	function() {
+																		/* 여기 */
+																		$(
+																				"#method")
+																				.val(
+																						"put");
 
-										var frm = $("#frm")[0];
-										frm.action = "/community/notice/" + boardIdx;
-										frm.submit();
-									});
-									
-								});
+																		var frm = $("#frm")[0];
+																		frm.action = "/community/notice/"
+																				+ boardIdx;
+																		frm
+																				.submit();
+																	});
+
+												});
 							</script>
 
 							<div class="form-group">
