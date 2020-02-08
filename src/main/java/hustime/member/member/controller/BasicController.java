@@ -43,6 +43,7 @@ public class BasicController {
 		return "/member/hu_login";
 	}
 	
+	//
 	@RequestMapping(value = "/register", method=RequestMethod.GET) 
 	public String registration(Model model) {
 		model.addAttribute("userForm", new MemberEntity());
