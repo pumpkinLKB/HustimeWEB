@@ -62,9 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.and()
 		
 //			// DB 어드민 접속 허용
-//			.csrf().disable().cors().and()
-//			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
-//			.and()
+			.csrf()
+			.ignoringAntMatchers("/h2-console/**", "/community/**", "/member/**")
+			.and()
 			
 			// 로그인
 			.formLogin()

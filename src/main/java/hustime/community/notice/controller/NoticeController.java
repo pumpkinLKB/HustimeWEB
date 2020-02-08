@@ -51,7 +51,17 @@ public class NoticeController {
 	
 	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.GET)
 	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+		System.out.println("#########");
 		ModelAndView mv = new ModelAndView("/community/notice/detail");
+		NoticeDto board = boardService.selectBoardDetail(boardIdx);
+		mv.addObject("board", board);
+		return mv;
+	}
+	
+	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.POST)
+	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+		System.out.println("@@@@@@@@@@");
+		ModelAndView mv = new ModelAndView("/community/notice/edit");
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;

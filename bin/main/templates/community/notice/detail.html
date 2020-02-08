@@ -315,8 +315,8 @@
 								</table>
 							</div>
 
-							<div class="file_list">
-								<!-- 여기 -->
+							<div class="form-group">
+								<label>첨부파일</label>
 								<a th:each="list : ${board.fileList}"
 									th:href="@{/board/file(idx=${list.idx}, boardIdx=${list.boardIdx})}"
 									th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
@@ -333,13 +333,13 @@
 
 								<div class="form-group">
 									<label>내용</label>
-									<text class="form-control" title="내용" id="contents"
+									<text class="form-control" rows="10" title="내용" id="contents"
 										name="contents" th:text="${board.contents }"></text>
 								</div>
 
 								<div class="form-group">
-									<a class="btn btn-outline btn-primary" href="#this" id="edit">수정하기</a>
-									<a class="btn btn-outline btn-primary" href="#this" id="delete">삭제하기</a>
+									<a class="btn btn-outline btn-primary" href="#this" id="edit">수정</a>
+									<a class="btn btn-outline btn-primary" href="#this" id="delete">삭제</a>
 									<a class="btn btn-outline btn-default" href="/community/notice">목록보기</a>
 								</div>
 
@@ -348,6 +348,33 @@
 								<!-- 여기 -->
 								<input type="hidden" id="method" name="_method" />
 							</form>
+							
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+							<script type="text/javascript">
+								$(document).ready(function() {
+									/* 여기 */
+									var boardIdx = $("#boardIdx").val();
+
+									$("#edit").on("click", function() {
+										/* 여기 */
+										$("#method").val("post");
+
+										var frm = $("#frm")[0];
+										frm.action = "/community/notice/" + boardIdx;
+										frm.submit();
+									});
+
+									$("#delete").on("click", function() {
+										/* 여기 */
+										$("#method").val("delete");
+
+										var frm = $("#frm")[0];
+										frm.action = "/community/notice/" + boardIdx;
+										frm.submit();
+									});
+								});
+							</script>
 
 							<div class="form-group">
 								<label>Contact Developer</label>
@@ -388,33 +415,6 @@
 		$(document).ready(function() {
 			$('#dataTables-example').DataTable({
 				responsive : true
-			});
-		});
-	</script>
-
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/* 여기 */
-			var boardIdx = $("#boardIdx").val();
-
-			$("#edit").on("click", function() {
-				/* 여기 */
-				$("#method").val("put");
-
-				var frm = $("#frm")[0];
-				frm.action = "/community/notice/" + boardIdx;
-				frm.submit();
-			});
-
-			$("#delete").on("click", function() {
-				/* 여기 */
-				$("#method").val("delete");
-
-				var frm = $("#frm")[0];
-				frm.action = "/community/notice/" + boardIdx;
-				frm.submit();
 			});
 		});
 	</script>
