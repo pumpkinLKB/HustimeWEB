@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.io.Serializable;
 
-import hustime.member.domain.User;
+import hustime.member.domain.user.User;
 
 @Getter
 public class SessionUser implements Serializable {

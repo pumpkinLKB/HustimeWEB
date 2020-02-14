@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import hustime.member.configuration.auth.dto.OAuthAttributes;
 import hustime.member.configuration.auth.dto.SessionUser;
-import hustime.member.domain.User;
-import hustime.member.domain.UserRepository;
+import hustime.member.domain.user.User;
+import hustime.member.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
@@ -35,6 +35,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        
+        System.out.println("loadUser_registrationID: "+registrationId);
+        System.out.println("loadUser_userNameAttributeName: "+userNameAttributeName);
+        System.out.println("loadUser_oAuth2User.getAttributes(): "+oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
@@ -45,11 +49,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-
     private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+        User user = userRepository.findByName(attributes.getName())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
+        
+        System.out.println("saveOrUpdate_registrationID: "+attributes.getEmail());
+        System.out.println("saveOrUpdate_userNameAttributeName: "+attributes.getName());
+        System.out.println("saveOrUpdate_oAuth2User.getAttributes(): "+attributes.getPicture());
 
         return userRepository.save(user);
     }

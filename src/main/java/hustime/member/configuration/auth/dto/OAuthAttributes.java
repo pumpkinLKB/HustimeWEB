@@ -2,8 +2,8 @@ package hustime.member.configuration.auth.dto;
 
 import java.util.Map;
 
-import hustime.member.domain.User;
-import hustime.member.member.entity.MemberRole;
+import hustime.member.domain.user.Role;
+import hustime.member.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -59,7 +59,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(MemberRole.USER)
+                .role(Role.USER)
                 .build();
     }
 }
