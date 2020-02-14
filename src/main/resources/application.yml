@@ -2,7 +2,7 @@
 #  config: classpath:logback-${spring.profiles.active}.xml
 
 spring:
-  datasource:
+  datasource: 
     hikari:
       connection-test-query: SELECT 1
       allow-pool-suspension: true
@@ -52,4 +52,4 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/insight?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: root
-      password: root
+      password: 1234
