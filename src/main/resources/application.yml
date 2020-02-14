@@ -2,7 +2,6 @@ logging:
   config: classpath:logback-${spring.profiles.active}.xml
 
 spring:
-
   datasource: 
     hikari:
       connection-test-query: SELECT 1
@@ -18,6 +17,13 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  freemarker:
+    cache: false
         
 mybatis:
   configuration:
