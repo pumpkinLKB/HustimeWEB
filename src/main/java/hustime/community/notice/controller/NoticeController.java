@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hustime.community.notice.dto.NoticeDto;
 import hustime.community.notice.dto.NoticeFileDto;
 import hustime.community.notice.service.NoticeService;
+import hustime.member.configuration.auth.LoginUser;
+import hustime.member.configuration.auth.dto.SessionUser;
 import hustime.member.member.controller.BasicController;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,45 +32,54 @@ public class NoticeController {
 	private NoticeService boardService;
 	
 	@RequestMapping(value="/community/notice", method=RequestMethod.GET)
-	public ModelAndView openBoardList() throws Exception{
+	public ModelAndView openBoardList(@LoginUser SessionUser user) throws Exception{
 		ModelAndView mv = new ModelAndView("/community/notice/list");
 		List<NoticeDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
+		if(user!=null) {
+	        mv.addObject("uName", user.getName());
+	    }
 		return mv;
 	}
 	
 	
 	@RequestMapping(value="/community/notice/write", method=RequestMethod.GET)
-	public String openBoardWrite() throws Exception{
+	public String openBoardWrite(@LoginUser SessionUser user) throws Exception{
 		return "/community/notice/write";
 	}
 
 	@RequestMapping(value="/community/notice/write", method=RequestMethod.POST)
-	public String insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	public String insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest, @LoginUser SessionUser user) throws Exception{
 		boardService.insertBoard(board, multipartHttpServletRequest);
 		return "redirect:/community/notice";
 	}
 	
 	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.GET)
-	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model, @LoginUser SessionUser user) throws Exception{
 		System.out.println("#########");
 		ModelAndView mv = new ModelAndView("/community/notice/detail");
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
+		if(user!=null) {
+	        mv.addObject("uName", user.getName());
+	    }
 		return mv;
 	}
 	
 	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.POST)
-	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model, @LoginUser SessionUser user) throws Exception{
 		System.out.println("@@@@@@@@@@");
 		ModelAndView mv = new ModelAndView("/community/notice/edit");
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
+		if(user!=null) {
+	        mv.addObject("uName", user.getName());
+	    }
 		return mv;
 	}
 	
 	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.PUT)
-	public String updateBoard(NoticeDto board) throws Exception{
+	public String updateBoard(NoticeDto board, @LoginUser SessionUser user) throws Exception{
 		boardService.updateBoard(board);
 		return "redirect:/community/notice";
 	}
@@ -82,6 +93,7 @@ public class NoticeController {
 	@RequestMapping(value="/community/notice/file", method=RequestMethod.GET)
 	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception{
 		NoticeFileDto boardFile = boardService.selectBoardFileInformation(idx, boardIdx);
+		
 		if(ObjectUtils.isEmpty(boardFile) == false) {
 			String fileName = boardFile.getOriginalFileName();
 			

@@ -27,25 +27,28 @@ public class IndexController {
    @Autowired
    private NoticeService noticeService;
    
-//   @GetMapping("/1")
-//   public String index(Model model, @LoginUser SessionUser user) {
-//      return "index";
-//   }
-   
    @RequestMapping(value = "/", method=RequestMethod.GET) 
    public ModelAndView templateloginPage(Model model, @LoginUser SessionUser user) throws Exception{
       System.out.println("USER: "+user);
-      if(user!=null) {
-         model.addAttribute("uName", user.getName());
-      }
       ModelAndView mv = new ModelAndView("/index");
       if(user!=null) {
           mv.addObject("uName", user.getName());
-       }
+      }
       List<ScheduleDto> list_schedule = scheduleService.selectTopFiveBoardList();
       List<NoticeDto> list_notice = noticeService.selectTopFiveBoardList();
       mv.addObject("list_schedule", list_schedule);
       mv.addObject("list_notice", list_notice);
+      return mv;
+   }
+   
+   @RequestMapping(value = "/userinfo", method=RequestMethod.GET) 
+   public ModelAndView openUserinfo(Model model, @LoginUser SessionUser user){
+      ModelAndView mv = new ModelAndView("/member/userProfile");
+      if(user!=null) {
+          mv.addObject("uName", user.getName());
+          mv.addObject("uEmail", user.getEmail());
+          mv.addObject("uPicture", user.getPicture());
+      }
       return mv;
    }
    
