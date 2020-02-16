@@ -28,6 +28,11 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	
 	@Override
+	public List<NoticeDto> selectTopFiveBoardList() throws Exception {
+		return boardMapper.selectTopFiveBoardList();
+	}
+	
+	@Override
 	public void insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardMapper.insertBoard(board);
 		List<NoticeFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
