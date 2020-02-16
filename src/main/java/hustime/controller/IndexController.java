@@ -19,18 +19,21 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class IndexController {
 	
-	@GetMapping("/1")
+	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser user) {
+		if(user!=null) {
+			model.addAttribute("uName", user.getName());
+		}
 		return "index";
 	}
 	
-	@RequestMapping(value = "/", method=RequestMethod.GET) 
+	@RequestMapping(value = "/1", method=RequestMethod.GET) 
 	public String templateloginPage(Model model, @LoginUser SessionUser user) {
 		System.out.println("USER: "+user);
 		if(user!=null) {
-			model.addAttribute("userName", user.getName());
+			model.addAttribute("uName", user.getName());
 		}
-		return "index1";
+		return "index2";
 	}
 	
 }
