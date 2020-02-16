@@ -18,13 +18,14 @@
 						</li>
 						<li>
 							<div th:if="${uName} != null" id=user>
-                				<i class="fa fa-user"></i> <span th:text="${uName}"> 님</span>
+                				<i class="fa fa-user"><span th:text="${uName}"> 님</span></i>
                 				<a href="/logout"><i class="fa fa-sign-out"></i> logout</a>
                 			</div>
                 			<div th:if="${uName} == null" id=user>
                 				<a href="/oauth2/authorization/naver" class="btn btn-Link" role="button"><img width="170" src="loginbutton/naver.png"/></a>
 								<a href="/oauth2/authorization/google" class="btn btn-Link" role="button"><img width="170" src="loginbutton/google.png"/></a>
 							</div>
+						</li>
 						<li><a href="#"><i class="fa fa-comments"></i> COMMUNITY<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
@@ -51,7 +52,6 @@
 				<!-- /.sidebar-collapse -->
 			</div>
 			<!-- /.navbar-static-side -->
-		</nav>
 
 		<div id="page-wrapper">
 

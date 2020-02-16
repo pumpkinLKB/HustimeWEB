@@ -36,9 +36,12 @@ public class IndexController {
    public ModelAndView templateloginPage(Model model, @LoginUser SessionUser user) throws Exception{
       System.out.println("USER: "+user);
       if(user!=null) {
-         model.addAttribute("userName", user.getName());
+         model.addAttribute("uName", user.getName());
       }
       ModelAndView mv = new ModelAndView("/index");
+      if(user!=null) {
+          mv.addObject("uName", user.getName());
+       }
       List<ScheduleDto> list_schedule = scheduleService.selectTopFiveBoardList();
       List<NoticeDto> list_notice = noticeService.selectTopFiveBoardList();
       mv.addObject("list_schedule", list_schedule);
