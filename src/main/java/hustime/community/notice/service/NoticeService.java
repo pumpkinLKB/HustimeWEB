@@ -11,6 +11,8 @@ public interface NoticeService {
 	
 	List<NoticeDto> selectBoardList() throws Exception;
 	
+	List<NoticeDto> selectTopFiveBoardList() throws Exception;
+	
 	void insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
 
 	NoticeDto selectBoardDetail(int boardIdx) throws Exception;

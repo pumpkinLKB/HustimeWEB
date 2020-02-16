@@ -1,5 +1,5 @@
-logging:
-  config: classpath:logback-${spring.profiles.active}.xml
+#logging:
+#  config: classpath:logback-${spring.profiles.active}.xml
 
 spring:
   datasource: 
@@ -10,6 +10,7 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: true
+    show-sql: true
     hibernate:
       use-new-id-generator-mappings: false  main:    allow-bean-definition-overriding: true  messages:    basename: validation
     encoding: UTF-8
@@ -23,8 +24,7 @@ spring:
     restart:
       enabled: false
   freemarker:
-    cache: false
-        
+    cache: false  profiles:    include:    - oauth  session:    store-type: jdbc  h2:    console:      enabled: true
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -37,7 +37,7 @@ spring:
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       jdbc-url: jdbc:log4jdbc:mysql://localhost:3306/insight?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: root
-      password: 1234
+      password: root
   thymeleaf:
     cache: false
   resources:

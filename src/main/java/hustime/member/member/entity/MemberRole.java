@@ -2,13 +2,15 @@ package hustime.member.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public enum MemberRole {
-	USER("ROLE_USER"),
-    ADMIN("ROLE_ADMIN");
+	USER("ROLE_USER", "손님"),
+    ADMIN("ROLE_ADMIN", "어드민");
 
-    private String value;
+    private final String key;
+    private final String title;
 }
 

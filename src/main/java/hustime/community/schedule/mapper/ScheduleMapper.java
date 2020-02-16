@@ -13,6 +13,8 @@ public interface ScheduleMapper {
 
 	List<ScheduleDto> selectBoardList() throws Exception;
 	
+	List<ScheduleDto> selectTopFiveBoardList() throws Exception;
+	
 	void insertBoard(ScheduleDto board) throws Exception;
 
 	ScheduleDto selectBoardDetail(int boardIdx) throws Exception;

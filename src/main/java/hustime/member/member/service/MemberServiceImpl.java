@@ -14,8 +14,8 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public MemberEntity findByUserEmail(String email) {
@@ -28,10 +28,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 		
 //	/bCryptPasswordEncoder 는 단방향 암호화 클래스
-	@Override
-	public void save(MemberEntity member) {
-		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-		member.setPasswordConfirm(bCryptPasswordEncoder.encode(member.getPasswordConfirm()));
-		memberRepository.save(member);
-	}
+//	@Override
+//	public void save(MemberEntity member) {
+//		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+//		member.setPasswordConfirm(bCryptPasswordEncoder.encode(member.getPasswordConfirm()));
+//		memberRepository.save(member);
+//	}
 }
