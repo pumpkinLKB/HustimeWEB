@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="hustime.community.free.mapper.FreeMapper">
-	<select id="selectBoardList" resultType="hustime.community.free.dto.FreeDto">
+<mapper namespace="hustime.qna.etc.EtcMapper">
+	<select id="selectBoardList" resultType="hustime.qna.etc.dto.EtcDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -9,14 +9,14 @@
 				hit_cnt,
 				DATE_FORMAT(created_datetime, '%Y.%m.%d %H:%i:%s') AS created_datetime
 			FROM
-				community_free
+				qna_etc
 			WHERE
 				deleted_yn = 'N'
 			ORDER BY board_idx DESC
 		]]>
 	</select>
 	
-	<select id="selectTopFiveBoardList" resultType="hustime.community.free.dto.FreeDto">
+	<select id="selectTopFiveBoardList" resultType="hustime.qna.etc.dto.EtcDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -24,7 +24,7 @@
 				hit_cnt,
 				DATE_FORMAT(created_datetime, '%Y.%m.%d %H:%i:%s') AS created_datetime
 			FROM
-				community_free
+				qna_etc
 			WHERE
 				deleted_yn = 'N'
 			ORDER BY board_idx DESC
@@ -32,9 +32,9 @@
 		]]>
 	</select>
 	
-	<insert id="insertBoard" parameterType="hustime.community.free.dto.FreeDto" useGeneratedKeys="true" keyProperty="boardIdx">
+	<insert id="insertBoard" parameterType="hustime.qna.etc.dto.EtcDto" useGeneratedKeys="true" keyProperty="boardIdx">
 		<![CDATA[
-			INSERT INTO community_free
+			INSERT INTO qna_etc
 			(
 				title, 
 				contents, 
@@ -51,7 +51,7 @@
 		]]>
 	</insert>
 	
-	<select id="selectBoardDetail" parameterType="int" resultType="hustime.community.free.dto.FreeDto">
+	<select id="selectBoardDetail" parameterType="int" resultType="hustime.qna.etc.dto.EtcDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -61,7 +61,7 @@
 				DATE_FORMAT(created_datetime, '%Y.%m.%d %H:%i:%s') AS created_datetime,
 				creator_id
 			FROM
-				community_free
+				qna_etc
 			WHERE
 				board_idx = #{boardIdx}
 				AND deleted_yn = 'N'
@@ -71,7 +71,7 @@
 	<update id="updateHitCount" parameterType="int">
 		<![CDATA[
 			UPDATE 
-				community_free 
+				qna_etc 
 			SET 
 				hit_cnt = hit_cnt + 1 
 			WHERE 
@@ -79,9 +79,9 @@
 		]]>
 	</update>
 	
-	<update id="updateBoard" parameterType="hustime.community.free.dto.FreeDto">
+	<update id="updateBoard" parameterType="hustime.qna.etc.dto.EtcDto">
 		<![CDATA[
-			UPDATE community_free SET 
+			UPDATE qna_etc SET 
 				title = #{title},
 				contents = #{contents},
 				updated_datetime = Now(),
@@ -93,7 +93,7 @@
 	
 	<update id="deleteBoard" parameterType="int">
 		<![CDATA[
-			UPDATE community_free SET 
+			UPDATE qna_etc SET 
 				deleted_yn = 'Y',
 				updated_datetime = Now(),
 				updater_id = 'admin'
@@ -102,9 +102,9 @@
 		]]>
 	</update>
 	
-	<insert id="insertBoardFileList" parameterType="hustime.community.free.dto.FreeDto">
+	<insert id="insertBoardFileList" parameterType="hustime.qna.etc.dto.EtcDto">
 		<![CDATA[
-			INSERT INTO community_free_file
+			INSERT INTO qna_etc_file
 			(
 				board_idx,
 				original_file_name,
@@ -127,7 +127,7 @@
 		</foreach>
 	</insert>
 	
-	<select id="selectBoardFileList" parameterType="int" resultType="hustime.community.free.dto.FreeFileDto">
+	<select id="selectBoardFileList" parameterType="int" resultType="hustime.qna.etc.dto.EtcFileDto">
 		<![CDATA[
 			SELECT
 				idx,
@@ -135,21 +135,21 @@
 				original_file_name,
 				FORMAT(ROUND(file_size / 1024), 0) AS file_size
 			FROM
-				community_free_file
+				qna_etc_file
 			WHERE
 				board_idx = #{boardIdx}
 				AND deleted_yn = 'N'
 		]]>
 	</select>
 	
-	<select id="selectBoardFileInformation" parameterType="map" resultType="hustime.community.free.dto.FreeFileDto">
+	<select id="selectBoardFileInformation" parameterType="map" resultType="hustime.qna.etc.dto.EtcFileDto">
 		<![CDATA[
 			SELECT
 				original_file_name,
 				stored_file_path,
 				file_size
 			FROM
-				community_free_file
+				qna_etc_file
 			WHERE
 				idx = #{idx}
 				AND board_idx = #{boardIdx}

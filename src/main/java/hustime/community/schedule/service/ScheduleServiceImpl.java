@@ -54,6 +54,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override
 	public void updateBoard(ScheduleDto board) throws Exception {
+		System.out.println(board);
 		boardMapper.updateBoard(board);
 	}
 

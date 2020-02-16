@@ -28,6 +28,11 @@ public class FreeServiceImpl implements FreeService{
 	}
 	
 	@Override
+	public List<FreeDto> selectTopFiveBoardList() throws Exception {
+		return boardMapper.selectBoardList();
+	}
+	
+	@Override
 	public void insertBoard(FreeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardMapper.insertBoard(board);
 		List<FreeFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);

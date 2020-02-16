@@ -1,4 +1,10 @@
-package hustime.community.schedule.controller;
+package hustime.qna.etc.controller;
+
+import java.io.File;
+import java.net.URLEncoder;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,75 +18,67 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import hustime.community.schedule.dto.ScheduleDto;
-import hustime.community.schedule.dto.ScheduleFileDto;
-import hustime.community.schedule.service.ScheduleService;
-import hustime.member.member.controller.BasicController;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.net.URLEncoder;
-import java.util.List;
+import hustime.qna.etc.dto.EtcDto;
+import hustime.qna.etc.dto.EtcFileDto;
+import hustime.qna.etc.service.EtcService;
 
 @Controller
-public class ScheduleController {
+public class EtcController {
 	
 	@Autowired
-	private ScheduleService boardService;
+	private EtcService boardService;
 	
-	@RequestMapping(value="/community/schedule", method=RequestMethod.GET)
+	@RequestMapping(value="/qna/etc", method=RequestMethod.GET)
 	public ModelAndView openBoardList() throws Exception{
-		ModelAndView mv = new ModelAndView("/community/schedule/list");
-		List<ScheduleDto> list = boardService.selectBoardList();
+		ModelAndView mv = new ModelAndView("/qna/etc/list");
+		List<EtcDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
 		return mv;
 	}
 	
-	@RequestMapping(value="/community/schedule/write", method=RequestMethod.GET)
+	
+	@RequestMapping(value="/qna/etc/write", method=RequestMethod.GET)
 	public String openBoardWrite() throws Exception{
-		return "/community/schedule/write";
+		return "/qna/etc/write";
 	}
 
-	@RequestMapping(value="/community/schedule/write", method=RequestMethod.POST)
-	public String insertBoard(ScheduleDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	@RequestMapping(value="/qna/etc/write", method=RequestMethod.POST)
+	public String insertBoard(EtcDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
 		boardService.insertBoard(board, multipartHttpServletRequest);
-		return "redirect:/community/schedule";
+		return "redirect:/qna/etc";
 	}
 	
-	@RequestMapping(value="/community/schedule/{boardIdx}", method=RequestMethod.GET)
+	@RequestMapping(value="/qna/etc/{boardIdx}", method=RequestMethod.GET)
 	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
-		ModelAndView mv = new ModelAndView("/community/schedule/detail");
-		ScheduleDto board = boardService.selectBoardDetail(boardIdx);
+		ModelAndView mv = new ModelAndView("/qna/etc/detail");
+		EtcDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
 	
-	@RequestMapping(value="/community/schedule/{boardIdx}", method=RequestMethod.POST)
+	@RequestMapping(value="/qna/etc/{boardIdx}", method=RequestMethod.POST)
 	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
-		ModelAndView mv = new ModelAndView("/community/schedule/edit");
-		ScheduleDto board = boardService.selectBoardDetail(boardIdx);
+		ModelAndView mv = new ModelAndView("/qna/etc/edit");
+		EtcDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
 	
-	@RequestMapping(value="/community/schedule/{boardIdx}", method=RequestMethod.PUT)
-	public String updateBoard(ScheduleDto board) throws Exception{
+	@RequestMapping(value="/qna/etc/{boardIdx}", method=RequestMethod.PUT)
+	public String updateBoard(EtcDto board) throws Exception{
 		boardService.updateBoard(board);
-		System.out.println("@@@@@@@@@@@@");
-		System.out.println(board);
-		return "redirect:/community/schedule";
+		return "redirect:/qna/etc";
 	}
 	
-	@RequestMapping(value="/community/schedule/{boardIdx}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/qna/etc/{boardIdx}", method=RequestMethod.DELETE)
 	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception{
 		boardService.deleteBoard(boardIdx);
-		return "redirect:/community/schedule";
+		return "redirect:/qna/etc";
 	}
 	
-	@RequestMapping(value="/community/schedule/file", method=RequestMethod.GET)
+	@RequestMapping(value="/qna/etc/file", method=RequestMethod.GET)
 	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception{
-		ScheduleFileDto boardFile = boardService.selectBoardFileInformation(idx, boardIdx);
+		EtcFileDto boardFile = boardService.selectBoardFileInformation(idx, boardIdx);
 		if(ObjectUtils.isEmpty(boardFile) == false) {
 			String fileName = boardFile.getOriginalFileName();
 			

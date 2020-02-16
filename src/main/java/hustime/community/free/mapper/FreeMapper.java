@@ -13,6 +13,8 @@ public interface FreeMapper {
 
 	List<FreeDto> selectBoardList() throws Exception;
 	
+	List<FreeDto> selectTopFiveBoardList() throws Exception;
+	
 	void insertBoard(FreeDto board) throws Exception;
 
 	FreeDto selectBoardDetail(int boardIdx) throws Exception;
