@@ -13,6 +13,8 @@ public interface NoticeMapper {
 
 	List<NoticeDto> selectBoardList() throws Exception;
 	
+	List<NoticeDto> selectTopFiveBoardList() throws Exception;
+	
 	void insertBoard(NoticeDto board) throws Exception;
 
 	NoticeDto selectBoardDetail(int boardIdx) throws Exception;

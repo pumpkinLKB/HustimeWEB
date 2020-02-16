@@ -11,6 +11,8 @@ public interface ScheduleService {
 	
 	List<ScheduleDto> selectBoardList() throws Exception;
 	
+	List<ScheduleDto> selectTopFiveBoardList() throws Exception;
+	
 	void insertBoard(ScheduleDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
 
 	ScheduleDto selectBoardDetail(int boardIdx) throws Exception;

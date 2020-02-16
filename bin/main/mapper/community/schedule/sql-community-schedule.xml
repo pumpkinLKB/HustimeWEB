@@ -16,6 +16,22 @@
 		]]>
 	</select>
 	
+	<select id="selectTopFiveBoardList" resultType="hustime.community.schedule.dto.ScheduleDto">
+		<![CDATA[
+			SELECT
+				board_idx,
+				title,
+				hit_cnt,
+				DATE_FORMAT(created_datetime, '%Y.%m.%d %H:%i:%s') AS created_datetime
+			FROM
+				community_schedule
+			WHERE
+				deleted_yn = 'N'
+			ORDER BY board_idx DESC
+			LIMIT 5
+		]]>
+	</select>
+	
 	<insert id="insertBoard" parameterType="hustime.community.schedule.dto.ScheduleDto" useGeneratedKeys="true" keyProperty="boardIdx">
 		<![CDATA[
 			INSERT INTO community_schedule
