@@ -36,9 +36,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         
-        System.out.println("loadUser_registrationID: "+registrationId);
-        System.out.println("loadUser_userNameAttributeName: "+userNameAttributeName);
-        System.out.println("loadUser_oAuth2User.getAttributes(): "+oAuth2User.getAttributes());
+//        System.out.println("loadUser_registrationID: "+registrationId);
+//        System.out.println("loadUser_userNameAttributeName: "+userNameAttributeName);
+//        System.out.println("loadUser_oAuth2User.getAttributes(): "+oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
@@ -54,9 +54,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
         
-        System.out.println("saveOrUpdate_registrationID: "+attributes.getEmail());
-        System.out.println("saveOrUpdate_userNameAttributeName: "+attributes.getName());
-        System.out.println("saveOrUpdate_oAuth2User.getAttributes(): "+attributes.getPicture());
+//        System.out.println("saveOrUpdate_registrationID: "+attributes.getEmail());
+//        System.out.println("saveOrUpdate_userNameAttributeName: "+attributes.getName());
+//        System.out.println("saveOrUpdate_oAuth2User.getAttributes(): "+attributes.getPicture());
 
         return userRepository.save(user);
     }
