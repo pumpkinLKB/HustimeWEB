@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{fragments/main_layout}">
+
+<body>
+<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">참여 기업 정보</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">(주)위니텍</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+						
+							<table width="100%"
+								class="table table-striped table-bordered table-hover"
+								id="dataTables-example">
+								<thead>
+									<tr>
+										<th>기업 홈페이지</th>
+										<th>기업 정보</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><a href = "http://www.winitech.com/">http://www.winitech.com</a></td>
+										<td><a href="http://www.saramin.co.kr/zf_user/company-info/view?csn=5048125346">http://www.saramin.co.kr</a></td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<div class="form-group">
+							<!-- * 카카오맵 - 지도퍼가기 -->
+<!-- 1. 지도 노드 -->
+<div id="daumRoughmapContainer1581929517282" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+
+<!--
+	2. 설치 스크립트
+	* 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
+-->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+<!-- 3. 실행 스크립트 -->
+<script charset="UTF-8">
+	new daum.roughmap.Lander({
+		"timestamp" : "1581929517282",
+		"key" : "x445",
+		"mapWidth" : "640",
+		"mapHeight" : "360"
+	}).render();
+</script>
+								<label>Contact Developer</label>
+								<p class="form-control-static">hustime@example.com</p>
+							</div>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /#page-wrapper -->
+	
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+</body>
+</html>

@@ -15,10 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 //		basePackages = {"hustime"})
 @SpringBootApplication//(exclude={MultipartAutoConfiguration.class})
 public class HustimeWebApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(HustimeWebApplication.class, args);
-		
 	}
-
 }
