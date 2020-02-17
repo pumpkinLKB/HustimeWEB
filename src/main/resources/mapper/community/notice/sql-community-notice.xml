@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hustime.community.notice.mapper.NoticeMapper">
-	<select id="selectBoardList" resultType="hustime.community.notice.dto.NoticeDto">
+	<select id="selectBoardList"
+		resultType="hustime.community.notice.dto.NoticeDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -15,8 +16,9 @@
 			ORDER BY board_idx DESC
 		]]>
 	</select>
-	
-	<select id="selectTopFiveBoardList" resultType="hustime.community.notice.dto.NoticeDto">
+
+	<select id="selectTopFiveBoardList"
+		resultType="hustime.community.notice.dto.NoticeDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -31,8 +33,21 @@
 			LIMIT 5
 		]]>
 	</select>
-	
-	<insert id="insertBoard" parameterType="hustime.community.notice.dto.NoticeDto" useGeneratedKeys="true" keyProperty="boardIdx">
+
+	<select id="selectNewBoardCount" resultType="int">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT board_idx)
+			FROM
+				community_notice
+			WHERE
+				created_datetime >= CURDATE() -1
+		]]>
+	</select>
+
+	<insert id="insertBoard"
+		parameterType="hustime.community.notice.dto.NoticeDto"
+		useGeneratedKeys="true" keyProperty="boardIdx">
 		<![CDATA[
 			INSERT INTO community_notice
 			(
@@ -50,8 +65,9 @@
 			)
 		]]>
 	</insert>
-	
-	<select id="selectBoardDetail" parameterType="int" resultType="hustime.community.notice.dto.NoticeDto">
+
+	<select id="selectBoardDetail" parameterType="int"
+		resultType="hustime.community.notice.dto.NoticeDto">
 		<![CDATA[
 			SELECT
 				board_idx,
@@ -67,7 +83,7 @@
 				AND deleted_yn = 'N'
 		]]>
 	</select>
-	
+
 	<update id="updateHitCount" parameterType="int">
 		<![CDATA[
 			UPDATE 
@@ -78,8 +94,9 @@
 				board_idx = #{boardIdx}
 		]]>
 	</update>
-	
-	<update id="updateBoard" parameterType="hustime.community.notice.dto.NoticeDto">
+
+	<update id="updateBoard"
+		parameterType="hustime.community.notice.dto.NoticeDto">
 		<![CDATA[
 			UPDATE community_notice SET 
 				title = #{title},
@@ -90,7 +107,7 @@
 				board_idx = #{boardIdx}
 		]]>
 	</update>
-	
+
 	<update id="deleteBoard" parameterType="int">
 		<![CDATA[
 			UPDATE community_notice SET 
@@ -101,8 +118,9 @@
 				board_idx = #{boardIdx}
 		]]>
 	</update>
-	
-	<insert id="insertBoardFileList" parameterType="hustime.community.notice.dto.NoticeDto">
+
+	<insert id="insertBoardFileList"
+		parameterType="hustime.community.notice.dto.NoticeDto">
 		<![CDATA[
 			INSERT INTO community_notice_file
 			(
@@ -117,17 +135,18 @@
 		]]>
 		<foreach collection="list" item="item" separator=",">
 			(
-				#{item.boardIdx},
-				#{item.originalFileName},
-				#{item.storedFilePath},
-				#{item.fileSize},
-				'admin',
-				NOW()
+			#{item.boardIdx},
+			#{item.originalFileName},
+			#{item.storedFilePath},
+			#{item.fileSize},
+			'admin',
+			NOW()
 			)
 		</foreach>
 	</insert>
-	
-	<select id="selectBoardFileList" parameterType="int" resultType="hustime.community.notice.dto.NoticeFileDto">
+
+	<select id="selectBoardFileList" parameterType="int"
+		resultType="hustime.community.notice.dto.NoticeFileDto">
 		<![CDATA[
 			SELECT
 				idx,
@@ -141,8 +160,9 @@
 				AND deleted_yn = 'N'
 		]]>
 	</select>
-	
-	<select id="selectBoardFileInformation" parameterType="map" resultType="hustime.community.notice.dto.NoticeFileDto">
+
+	<select id="selectBoardFileInformation" parameterType="map"
+		resultType="hustime.community.notice.dto.NoticeFileDto">
 		<![CDATA[
 			SELECT
 				original_file_name,
@@ -156,5 +176,5 @@
 				AND deleted_yn = 'N'
 		]]>
 	</select>
-	
+
 </mapper>

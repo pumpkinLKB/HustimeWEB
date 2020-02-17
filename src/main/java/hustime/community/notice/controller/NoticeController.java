@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hustime.community.notice.dto.NoticeDto;
 import hustime.community.notice.dto.NoticeFileDto;
 import hustime.community.notice.service.NoticeService;
+import hustime.member.configuration.auth.LoginUser;
+import hustime.member.configuration.auth.dto.SessionUser;
 import hustime.member.member.controller.BasicController;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,73 +27,89 @@ import java.util.List;
 
 @Controller
 public class NoticeController {
-	
+
 	@Autowired
 	private NoticeService boardService;
-	
-	@RequestMapping(value="/community/notice", method=RequestMethod.GET)
-	public ModelAndView openBoardList() throws Exception{
+
+	@RequestMapping(value = "/community/notice", method = RequestMethod.GET)
+	public ModelAndView openBoardList(@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/notice/list");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		List<NoticeDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
 		return mv;
 	}
-	
-	
-	@RequestMapping(value="/community/notice/write", method=RequestMethod.GET)
-	public String openBoardWrite() throws Exception{
-		return "/community/notice/write";
+
+	@RequestMapping(value = "/community/notice/write", method = RequestMethod.GET)
+	public ModelAndView openBoardWrite(@LoginUser SessionUser user) throws Exception {
+		ModelAndView mv = new ModelAndView("/community/notice/write");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
+		return mv;
 	}
 
-	@RequestMapping(value="/community/notice/write", method=RequestMethod.POST)
-	public String insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	@RequestMapping(value = "/community/notice/write", method = RequestMethod.POST)
+	public String insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest)
+			throws Exception {
 		boardService.insertBoard(board, multipartHttpServletRequest);
 		return "redirect:/community/notice";
 	}
-	
-	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.GET)
-	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
-		System.out.println("#########");
+
+	@RequestMapping(value = "/community/notice/{boardIdx}", method = RequestMethod.GET)
+	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model,
+			@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/notice/detail");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
-	
-	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.POST)
-	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
-		System.out.println("@@@@@@@@@@");
+
+	@RequestMapping(value = "/community/notice/{boardIdx}", method = RequestMethod.POST)
+	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model,
+			@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/notice/edit");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		NoticeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
-	
-	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.PUT)
-	public String updateBoard(NoticeDto board) throws Exception{
+
+	@RequestMapping(value = "/community/notice/{boardIdx}", method = RequestMethod.PUT)
+	public String updateBoard(NoticeDto board, @LoginUser SessionUser user) throws Exception {
 		boardService.updateBoard(board);
 		return "redirect:/community/notice";
 	}
-	
-	@RequestMapping(value="/community/notice/{boardIdx}", method=RequestMethod.DELETE)
-	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception{
+
+	@RequestMapping(value = "/community/notice/{boardIdx}", method = RequestMethod.DELETE)
+	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception {
 		boardService.deleteBoard(boardIdx);
 		return "redirect:/community/notice";
 	}
-	
-	@RequestMapping(value="/community/notice/file", method=RequestMethod.GET)
-	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception{
+
+	@RequestMapping(value = "/community/notice/file", method = RequestMethod.GET)
+	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response)
+			throws Exception {
 		NoticeFileDto boardFile = boardService.selectBoardFileInformation(idx, boardIdx);
-		if(ObjectUtils.isEmpty(boardFile) == false) {
+
+		if (ObjectUtils.isEmpty(boardFile) == false) {
 			String fileName = boardFile.getOriginalFileName();
-			
+
 			byte[] files = FileUtils.readFileToByteArray(new File(boardFile.getStoredFilePath()));
-			
+
 			response.setContentType("application/octet-stream");
 			response.setContentLength(files.length);
-			response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName,"UTF-8")+"\";");
+			response.setHeader("Content-Disposition",
+					"attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
 			response.setHeader("Content-Transfer-Encoding", "binary");
-			
+
 			response.getOutputStream().write(files);
 			response.getOutputStream().flush();
 			response.getOutputStream().close();

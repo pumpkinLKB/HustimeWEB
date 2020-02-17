@@ -12,8 +12,9 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		log.debug("======================================          START         ======================================");
-		log.debug(" Request URI \t:  " + request.getRequestURI());
+//		log.debug("======================================          START         ======================================");
+//		log.debug(" Request URI \t:  " + request.getRequestURI());
+		
 		return super.preHandle(request, response, handler);
 	}
 	

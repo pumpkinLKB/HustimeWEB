@@ -18,6 +18,9 @@ import hustime.community.schedule.dto.ScheduleDto;
 import hustime.community.schedule.service.ScheduleService;
 import hustime.member.configuration.auth.LoginUser;
 import hustime.member.configuration.auth.dto.SessionUser;
+import hustime.qna.QnaService;
+import hustime.qna.etc.dto.EtcDto;
+import hustime.qna.etc.service.EtcService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -30,6 +33,11 @@ public class IndexController {
    private NoticeService noticeService;
    @Autowired
    private FreeService freeService;
+   @Autowired
+   private EtcService etcService;
+   @Autowired
+   private QnaService qnaService;
+
    
    @RequestMapping(value = "/", method=RequestMethod.GET) 
    public ModelAndView templateloginPage(Model model, @LoginUser SessionUser user) throws Exception{
@@ -37,14 +45,34 @@ public class IndexController {
       ModelAndView mv = new ModelAndView("/index");
       if(user!=null) {
           mv.addObject("uName", user.getName());
-       }
+      }
+      int count_new_schedule = scheduleService.selectNewBoardCount();
+      int count_new_notice = noticeService.selectNewBoardCount();
+      int count_new_qna = qnaService.selectNewBoardCount();
       List<ScheduleDto> list_schedule = scheduleService.selectTopFiveBoardList();
       List<NoticeDto> list_notice = noticeService.selectTopFiveBoardList();
       List<FreeDto> list_free = freeService.selectTopFiveBoardList();
+      List<EtcDto> list_etc = etcService.selectTopFiveBoardList();
+      mv.addObject("count_schedule", count_new_schedule);
+      mv.addObject("count_notice", count_new_notice);
+      mv.addObject("count_qna", count_new_qna);
       mv.addObject("list_schedule", list_schedule);
       mv.addObject("list_notice", list_notice);
       mv.addObject("list_free", list_free);
+      mv.addObject("list_etc", list_etc);
+      return mv;
+   }
+
+   @RequestMapping(value = "/userinfo", method=RequestMethod.GET) 
+   public ModelAndView openUserinfo(Model model, @LoginUser SessionUser user){
+      ModelAndView mv = new ModelAndView("/member/userProfile");
+      if(user!=null) {
+          mv.addObject("uName", user.getName());
+          mv.addObject("uEmail", user.getEmail());
+          mv.addObject("uPicture", user.getPicture());
+      }
       return mv;
    }
    
 }
+

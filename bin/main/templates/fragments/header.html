@@ -133,14 +133,14 @@
                     <ul class="dropdown-menu dropdown-user">
                     <div th:if="${uName} != null" id=user>
                       <li>
-                           <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                           <a href="/userinfo"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li>
                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+                           <a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
                         </li>
                    </div>
                    <div th:if="${uName} == null" id=user>
@@ -171,7 +171,7 @@
                   <li>
                      <div th:if="${uName} != null" id=user>
                             <i class="fa fa-user"><span th:text="${uName}"> 님</span></i>
-                            <a href="/logout"><i class="fa fa-sign-out"></i> logout</a>
+                            <a href="/logout"><i class="fa fa-sign-out-alt"></i> logout</a>
                          </div>
                          <div th:if="${uName} == null" id=user>
                             <a href="/oauth2/authorization/naver" class="btn btn-Link" role="button"><img width="170" src="loginbutton/naver.png"/></a>
@@ -191,12 +191,12 @@
                      <ul class="nav nav-second-level">
                         <li><a href="/infomation/restaurant">식당정보</a></li>
                         <li><a href="flot.html">정보공유</a></li>
-                        <li><a href="morris.html">참여기업</a></li>
+                        <li><a href="/company">참여기업</a></li>
                      </ul> <!-- /.nav-second-level --></li>
                   <li><a href="#"><i class="fa fa-question-circle"></i> Q&A<span
                         class="fa arrow"></span></a>
                      <ul class="nav nav-second-level">
-                        <li><a href="flot.html">Tech Q&A</a></li>
+                        <li><a href="/qna/tech">Tech Q&A</a></li>
                         <li><a href="/qna/etc">Etc Q&A</a></li>
                      </ul> <!-- /.nav-second-level --></li>
                </ul>
@@ -204,6 +204,7 @@
             <!-- /.sidebar-collapse -->
          </div>
          <!-- /.navbar-static-side -->
-
+   </div>
+   </nav>
 </header>
 </html>

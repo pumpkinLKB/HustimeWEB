@@ -15,6 +15,8 @@ public interface ScheduleMapper {
 	
 	List<ScheduleDto> selectTopFiveBoardList() throws Exception;
 	
+	int selectNewBoardCount() throws Exception;
+	
 	void insertBoard(ScheduleDto board) throws Exception;
 
 	ScheduleDto selectBoardDetail(int boardIdx) throws Exception;

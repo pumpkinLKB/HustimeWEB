@@ -33,6 +33,11 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	
 	@Override
+	public int selectNewBoardCount() throws Exception{
+		return boardMapper.selectNewBoardCount();
+	}
+	
+	@Override
 	public void insertBoard(NoticeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardMapper.insertBoard(board);
 		List<NoticeFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);

@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hustime.community.free.dto.FreeDto;
 import hustime.community.free.dto.FreeFileDto;
 import hustime.community.free.service.FreeService;
+import hustime.member.configuration.auth.LoginUser;
+import hustime.member.configuration.auth.dto.SessionUser;
 import hustime.member.member.controller.BasicController;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,71 +27,87 @@ import java.util.List;
 
 @Controller
 public class FreeController {
-	
+
 	@Autowired
 	private FreeService boardService;
-	
-	@RequestMapping(value="/community/free", method=RequestMethod.GET)
-	public ModelAndView openBoardList() throws Exception{
+
+	@RequestMapping(value = "/community/free", method = RequestMethod.GET)
+	public ModelAndView openBoardList(@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/free/list");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		List<FreeDto> list = boardService.selectBoardList();
 		mv.addObject("list", list);
 		return mv;
 	}
-	
-	
-	@RequestMapping(value="/community/free/write", method=RequestMethod.GET)
-	public String openBoardWrite() throws Exception{
-		return "/community/free/write";
+
+	@RequestMapping(value = "/community/free/write", method = RequestMethod.GET)
+	public ModelAndView openBoardWrite(@LoginUser SessionUser user) throws Exception {
+		ModelAndView mv = new ModelAndView("/community/free/write");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
+		return mv;
 	}
 
-	@RequestMapping(value="/community/free/write", method=RequestMethod.POST)
-	public String insertBoard(FreeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	@RequestMapping(value = "/community/free/write", method = RequestMethod.POST)
+	public String insertBoard(FreeDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardService.insertBoard(board, multipartHttpServletRequest);
 		return "redirect:/community/free";
 	}
-	
-	@RequestMapping(value="/community/free/{boardIdx}", method=RequestMethod.GET)
-	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+
+	@RequestMapping(value = "/community/free/{boardIdx}", method = RequestMethod.GET)
+	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx, ModelMap model,
+			@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/free/detail");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		FreeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
-	
-	@RequestMapping(value="/community/free/{boardIdx}", method=RequestMethod.POST)
-	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model) throws Exception{
+
+	@RequestMapping(value = "/community/free/{boardIdx}", method = RequestMethod.POST)
+	public ModelAndView openBoardEdit(@PathVariable("boardIdx") int boardIdx, ModelMap model,
+			@LoginUser SessionUser user) throws Exception {
 		ModelAndView mv = new ModelAndView("/community/free/edit");
+		if (user != null) {
+			mv.addObject("uName", user.getName());
+		}
 		FreeDto board = boardService.selectBoardDetail(boardIdx);
 		mv.addObject("board", board);
 		return mv;
 	}
-	
-	@RequestMapping(value="/community/free/{boardIdx}", method=RequestMethod.PUT)
-	public String updateBoard(FreeDto board) throws Exception{
+
+	@RequestMapping(value = "/community/free/{boardIdx}", method = RequestMethod.PUT)
+	public String updateBoard(FreeDto board) throws Exception {
 		boardService.updateBoard(board);
 		return "redirect:/community/free";
 	}
-	
-	@RequestMapping(value="/community/free/{boardIdx}", method=RequestMethod.DELETE)
-	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception{
+
+	@RequestMapping(value = "/community/free/{boardIdx}", method = RequestMethod.DELETE)
+	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception {
 		boardService.deleteBoard(boardIdx);
 		return "redirect:/community/free";
 	}
-	
-	@RequestMapping(value="/community/free/file", method=RequestMethod.GET)
-	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception{
+
+	@RequestMapping(value = "/community/free/file", method = RequestMethod.GET)
+	public void downloadBoardFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response)
+			throws Exception {
 		FreeFileDto boardFile = boardService.selectBoardFileInformation(idx, boardIdx);
-		if(ObjectUtils.isEmpty(boardFile) == false) {
+		if (ObjectUtils.isEmpty(boardFile) == false) {
 			String fileName = boardFile.getOriginalFileName();
-			
+
 			byte[] files = FileUtils.readFileToByteArray(new File(boardFile.getStoredFilePath()));
-			
+
 			response.setContentType("application/octet-stream");
 			response.setContentLength(files.length);
-			response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName,"UTF-8")+"\";");
+			response.setHeader("Content-Disposition",
+					"attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
 			response.setHeader("Content-Transfer-Encoding", "binary");
-			
+
 			response.getOutputStream().write(files);
 			response.getOutputStream().flush();
 			response.getOutputStream().close();

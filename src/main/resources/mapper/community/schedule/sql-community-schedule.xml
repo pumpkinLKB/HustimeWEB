@@ -32,6 +32,17 @@
 		]]>
 	</select>
 	
+	<select id="selectNewBoardCount" resultType="int">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT board_idx)
+			FROM
+				community_schedule
+			WHERE
+				created_datetime >= CURDATE() -1
+		]]>
+	</select>
+	
 	<insert id="insertBoard" parameterType="hustime.community.schedule.dto.ScheduleDto" useGeneratedKeys="true" keyProperty="boardIdx">
 		<![CDATA[
 			INSERT INTO community_schedule

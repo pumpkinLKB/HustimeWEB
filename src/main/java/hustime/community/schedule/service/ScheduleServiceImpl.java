@@ -33,6 +33,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	@Override
+	public int selectNewBoardCount() throws Exception{
+		return boardMapper.selectNewBoardCount();
+	}
+	
+	@Override
 	public void insertBoard(ScheduleDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardMapper.insertBoard(board);
 		List<ScheduleFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
