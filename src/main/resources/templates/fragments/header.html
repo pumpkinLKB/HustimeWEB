@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Hustime</a>
+                <a href="/"><img width="130" height = "50" src="/images/Hustime.png"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -140,7 +140,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                           <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                    </div>
                    <div th:if="${uName} == null" id=user>
@@ -171,11 +171,11 @@
                   <li>
                      <div th:if="${uName} != null" id=user>
                             <i class="fa fa-user"><span th:text="${uName}"> 님</span></i>
-                            <a href="/logout"><i class="fa fa-sign-out-alt"></i> logout</a>
+                            <a href="/logout"><i class="fa fa-sign-out"></i> logout</a>
                          </div>
                          <div th:if="${uName} == null" id=user>
-                            <a href="/oauth2/authorization/naver" class="btn btn-Link" role="button"><img width="170" src="loginbutton/naver.png"/></a>
-                        <a href="/oauth2/authorization/google" class="btn btn-Link" role="button"><img width="170" src="loginbutton/google.png"/></a>
+                            <a href="/oauth2/authorization/naver" class="btn btn-Link" role="button"><img width="170" src="/loginbutton/naver.png"/></a>
+                        <a href="/oauth2/authorization/google" class="btn btn-Link" role="button"><img width="170" src="/loginbutton/google.png"/></a>
                      </div>
                   </li>
                   <li><a href="#"><i class="fa fa-comments"></i> COMMUNITY<span
