@@ -43,7 +43,7 @@ public class EtcController {
 
 	@RequestMapping(value = "/qna/etc/write", method = RequestMethod.GET)
 	public ModelAndView openBoardWrite(@LoginUser SessionUser user) throws Exception {
-		ModelAndView mv = new ModelAndView("/qna/tech/write");
+		ModelAndView mv = new ModelAndView("/qna/etc/write");
 		if (user != null) {
 			mv.addObject("uName", user.getName());
 		}

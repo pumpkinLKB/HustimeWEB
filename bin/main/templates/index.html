@@ -32,8 +32,8 @@
 						</div>
 						<a href="/community/schedule">
 							<div class="panel-footer">
-								<span class="pull-left">View Details</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<span class="pull-left">Schedule</span> <span class="pull-right"><i
+									class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
 						</a>
@@ -54,8 +54,8 @@
 						</div>
 						<a href="/community/notice">
 							<div class="panel-footer">
-								<span class="pull-left" >View Details</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<span class="pull-left">Notice</span> <span class="pull-right"><i
+									class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
 						</a>
@@ -69,18 +69,18 @@
 									<i class="fa fa-question-circle fa-5x"></i>
 								</div>
 								<div class="col-xs-8 text-right">
-									<div class="huge">3</div>
+									<div class="huge" th:text="${count_qna}"></div>
 									<div>새 질문!</div>
 								</div>
 							</div>
 						</div>
-						<a href="/qna/tech">
-							<div class="panel-footer">
-								<span class="pull-left">View Details</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+						<div class="panel-footer">
+							<a class="pull-left" href="/qna/tech">Tech&nbsp <span
+								class="pull"><i class="fa fa-arrow-circle-right"></i></span></a>
+							&nbsp&nbsp&nbsp&nbsp <a href="/qna/etc">Etc&nbsp <span
+								class="pull"><i class="fa fa-arrow-circle-right"></i></span></a>
+							<div class="clearfix"></div>
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
@@ -98,8 +98,8 @@
 						</div>
 						<a href="/company">
 							<div class="panel-footer">
-								<span class="pull-left">View Details</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<span class="pull-left">Company</span> <span class="pull-right"><i
+									class="fa fa-arrow-circle-right"></i></span>
 								<div class="clearfix"></div>
 							</div>
 						</a>
@@ -229,15 +229,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${#lists.size(list_etc)} > 0"
-											th:each="list : ${list_etc}">
-											<td class="title"><a href="/qna/etc"
-												th:attrappend="href=${list.boardIdx}"
-												th:text="${list.title}"></a></td>
+										<tr th:if="${#lists.size(list_qna)} > 0"
+											th:each="list : ${list_qna}">
+											<td th:text="${list.title}"></td>
 											<td th:text="${list.createdDatetime}"></td>
 										</tr>
-										<tr th:unless="${#lists.size(list_etc)} > 0">
-											<td colspan="4">등록된 공지사항이 없습니다.</td>
+										<tr th:unless="${#lists.size(list_qna)} > 0">
+											<td colspan="4">등록된 게시판이 없습니다.</td>
 										</tr>
 									</tbody>
 								</table>
